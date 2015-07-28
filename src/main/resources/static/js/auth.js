@@ -17,11 +17,11 @@
         })
     }
 
-    authServiceFactory.$inject = ['jwtHelper', 'localStorageService', 'tokenIdKey', 'lodash'];
-    function authServiceFactory(jwtHelper, localStorageService, tokenIdKey, lodash) {
+    authServiceFactory.$inject = ['jwtHelper', 'localStorageService', 'tokenStorageKey', 'userDataStorageKey', 'lodash', 'Restangular', '$q'];
+    function authServiceFactory(jwtHelper, localStorageService, tokenStorageKey, userDataStorageKey, lodash, Restangular, $q) {
 
         function getToken() {
-            return localStorageService.get(tokenIdKey);
+            return localStorageService.get(tokenStorageKey);
         }
 
         function isAuthenticated() {
@@ -35,18 +35,32 @@
             return authenticated;
         }
 
+        function authenticate(username, password) {
+            return Restangular
+                .all('rest')
+                .customPOST({}, 'authenticate', {'username': username, 'password': password})
+                .then(function success(data) {
+                    localStorageService.set(tokenStorageKey, data.token);
+                    localStorageService.set(userDataStorageKey, jwtHelper.decodeToken(data.token));
+                }, function failure(reason) {
+                    return $q.reject(reason);
+                });
+        }
+
         return {
-            'isAuthenticated': isAuthenticated
+            'isAuthenticated': isAuthenticated,
+            'authenticate': authenticate
         };
     }
 
     angular
-        .module('mrp.auth', ['ngLodash', 'angular-jwt', 'LocalStorageModule'])
+        .module('mrp.auth', ['ngLodash', 'angular-jwt', 'LocalStorageModule', 'restangular'])
     ;
 
     angular
         .module('mrp.auth')
-        .constant('tokenIdKey', 'token_id')
+        .constant('tokenStorageKey', 'token')
+        .constant('userDataStorageKey', 'userData')
         .factory('authService', authServiceFactory)
         .run(run)
     ;

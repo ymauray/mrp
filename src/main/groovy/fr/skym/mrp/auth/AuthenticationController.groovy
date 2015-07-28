@@ -23,7 +23,7 @@ class AuthenticationController {
     @Autowired
     AuthenticationManager authenticationManager
 
-    @RequestMapping(value = "/authenticate" /*, method = RequestMethod.POST*/)
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     def authenticate(@RequestParam("username") String username, @RequestParam("password") String password) {
         def authenticationToken = new UsernamePasswordAuthenticationToken(username, password)
         def authentication = authenticationManager.authenticate(authenticationToken)

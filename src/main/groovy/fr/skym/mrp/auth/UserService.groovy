@@ -27,7 +27,7 @@ class UserService implements UserDetailsService {
                 accountNonLocked: true,
                 credentialsNonExpired: true,
                 enabled: true,
-                authorities: [new Authority(authority: "ADMIN"), new Authority(authority: "USER")]
+                authorities: [new Authority(authority: "USER")]
         )
 
         admin = new User(
@@ -37,7 +37,7 @@ class UserService implements UserDetailsService {
                 accountNonLocked: true,
                 credentialsNonExpired: true,
                 enabled: true,
-                authorities: [new Authority(authority: "USER")]
+                authorities: [new Authority(authority: "ADMIN"), new Authority(authority: "USER")]
         )
     }
 

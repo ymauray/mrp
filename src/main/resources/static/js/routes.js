@@ -1,5 +1,23 @@
 (function(angular) {
 
+    securedController.$inject = ['localStorageService', 'userDataStorageKey', 'lodash'];
+    function securedController(localStorageService, userDataStorageKey, _) {
+        var userData = localStorageService.get(userDataStorageKey);
+        this.username = userData.username;
+        this.roles = userData.roles;
+
+        this.isAdmin = function() {
+            return this.hasRole('ADMIN');
+        };
+
+        this.hasRole = function(role) {
+            var picked = _.find(this.roles, function(e) {
+                return e.authority == role;
+            });
+            return !_.isUndefined(picked);
+        }
+    }
+
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
     function config($stateProvider, $urlRouterProvider) {
         $urlRouterProvider
@@ -10,7 +28,10 @@
                 abstract: true,
                 data: {
                     secured: true
-                }
+                },
+                templateUrl: 'templates/ng-adminLTE/outside.html',
+                controller: securedController,
+                controllerAs: 'securedController'
             })
             .state('home', {
                 parent: 'secured',
@@ -21,7 +42,7 @@
     }
 
     angular
-        .module('mrp.routes', ['ui.router'])
+        .module('mrp.routes', ['ui.router', 'LocalStorageModule', 'mrp.auth', 'lodash'])
     ;
 
     angular

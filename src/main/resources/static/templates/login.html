@@ -1,0 +1,44 @@
+<div class="login-form-wrapper" data-body-backstretch="css/images/5WFFFULB4G.jpg">
+    <div class="top-content">
+        <div class="inner-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <h1>Login Form</h1>
+                        <div class="description">
+                            <p>
+                                Blablabla login etc..etc..
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h3>Login</h3>
+                                <p>Enter your username and password :</p>
+                            </div>
+                            <div class="form-top-right">
+                                <i class="fa fa-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-bottom">
+                            <form name="form" role="form" method="post" class="login-form" ng-submit="loginController.login()">
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-username">Username</label>
+                                    <input type="text" ng-model="loginController.username" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-password">Password</label>
+                                    <input type="password" ng-model="loginController.password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password" required="true">
+                                </div>
+                                <button type="submit" class="btn" ng-disabled="form.$invalid || loginController.processing">Sign in !</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

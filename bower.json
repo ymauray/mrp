@@ -1,0 +1,33 @@
+{
+  "name": "mrp",
+  "version": "1.0-SNAPSHOT",
+  "homepage": "https://github.com/ymauray/mrp",
+  "authors": [
+    "Yannick Mauray <yannick@skym.fr>"
+  ],
+  "description": "mrp",
+  "license": "GPLv2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/resources/static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3",
+    "angular-ui-router": "~0.2.15",
+    "angular-local-storage": "~0.2.2",
+    "angular-resource": "~1.4.3",
+    "angular-jwt": "~0.0.9",
+    "ng-lodash": "~0.2.3",
+    "bootstrap": "~3.3.5",
+    "fontawesome": "~4.3.0",
+    "jquery-backstretch": "~2.0.4",
+    "jquery": "2.1.4"
+  },
+  "resolutions": {
+    "jquery": "2.1.4"
+  }
+}

@@ -49,7 +49,7 @@ class UserService implements UserDetailsService {
             case "admin":
                 return admin
             default:
-                throw new UsernameNotFoundException()
+                throw new UsernameNotFoundException(username)
         }
     }
 }

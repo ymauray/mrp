@@ -42,3 +42,5 @@ bower_components
 .bower-registry
 .bower-tmp
 
+### Neo4j ###
+mrp.neo4j.db

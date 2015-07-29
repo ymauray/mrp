@@ -15,41 +15,39 @@ class UserService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder
 
-    User user
-    User admin
+    @Autowired
+    UserRepository userRepository
 
     @PostConstruct
     def init() {
-        user = new User(
-                username: "user",
-                password: passwordEncoder.encode("user"),
-                accountNonExpired: true,
-                accountNonLocked: true,
-                credentialsNonExpired: true,
-                enabled: true,
-                authorities: [new Authority(authority: "USER")]
-        )
-
-        admin = new User(
-                username: "admin",
-                password: passwordEncoder.encode("admin"),
-                accountNonExpired: true,
-                accountNonLocked: true,
-                credentialsNonExpired: true,
-                enabled: true,
-                authorities: [new Authority(authority: "ADMIN"), new Authority(authority: "USER")]
-        )
+        User admin = userRepository.findByUsername("admin")
+        if (!admin) {
+            createUser("admin", "Ch@ng3M3", "ADMIN", "USER")
+        }
     }
 
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        switch (username) {
-            case "user":
-                return user
-            case "admin":
-                return admin
-            default:
-                throw new UsernameNotFoundException(username)
+        def user = userRepository.findByUsername(username)
+        if (!user) {
+            throw new UsernameNotFoundException(username)
         }
+        return user
+    }
+
+    User createUser(String username, String password, String... authorities) {
+        def user = new User(
+                username: username,
+                password: passwordEncoder.encode(password),
+                authorities: authorities?.collect({
+                    new Authority(authority: it)
+                }),
+                accountNonExpired: true,
+                accountNonLocked: true,
+                credentialsNonExpired: true,
+                enabled: true
+        )
+        userRepository.save(user)
+        return user
     }
 }

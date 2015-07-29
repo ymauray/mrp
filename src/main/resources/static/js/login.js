@@ -1,18 +1,26 @@
 (function(angular) {
 
-    loginController.$inject = ['lodash', 'authService', '$state'];
-    function loginController(lodash, authService, $state) {
-        this.processing = false;
-        this.login = function() {
-            this.processing = true;
-            console.log('login with username = ' + this.username + ' and password = ' + this.password);
-            authService.authenticate(this.username, this.password).then(function success() {
+    loginController.$inject = ['$scope', 'lodash', 'authService', '$state'];
+    function loginController($scope, lodash, authService, $state) {
+        var ctrl = this;
+        ctrl.processing = false;
+        ctrl.error = false;
+        ctrl.login = function() {
+            ctrl.processing = true;
+            authService.authenticate(ctrl.username, ctrl.password).then(function success() {
                 console.log('Login successfull');
                 $state.go('home');
             }, function failure() {
                 console.log('Login failed');
+                ctrl.error = true;
+                ctrl.processing = false;
+                angular.element('[autofocus]').focus();
+                angular.element('[autofocus]').select();
             });
         }
+        $scope.$watch(function() { return ctrl.username  + ctrl.password }, function() {
+            ctrl.error = false;
+        });
     }
 
     onEnter.$inject = ['localStorageService', 'tokenStorageKey', 'userDataStorageKey'];

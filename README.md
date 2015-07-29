@@ -26,3 +26,4 @@ Get the javascript components :
 
     $ bower install
     
+Run and enjoy !

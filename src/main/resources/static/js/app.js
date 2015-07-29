@@ -1,10 +1,16 @@
 (function(angular) {
 
-    appController.$inject = ['localStorageService'];
-    function appController(localStorageService) {
-        this.title = "Titre de la page";
-        console.log("Local storage supported : " + localStorageService.isSupported);
-        console.log("Local storage type : " + localStorageService.getStorageType());
+    appController.$inject = ['localStorageService', '$rootScope', 'lodash'];
+    function appController(localStorageService, $rootScope, _) {
+        var ctrl = this;
+        ctrl.title = "Titre de la page";
+        $rootScope.$on('$stateChangeSuccess', function(element, toState, toStateParam) {
+            if (!_.isUndefined(toState) && !_.isUndefined(toState.data)) {
+                ctrl.stateData = _.pick(toState.data, ['pageHeader', 'pageDescription']);
+            } else {
+                delete ctrl.stateData;
+            }
+        });
     }
 
     config.$inject = ['localStorageServiceProvider'];
@@ -13,7 +19,7 @@
     }
 
     angular
-        .module('mrp', ['mrp.auth', 'mrp.login', 'mrp.routes', 'LocalStorageModule', 'backstretch'])
+        .module('mrp', ['mrp.auth', 'mrp.login', 'mrp.routes', 'mrp.users', 'adminlte', 'LocalStorageModule', 'backstretch', 'lodash'])
     ;
 
     angular

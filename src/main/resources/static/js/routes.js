@@ -36,7 +36,11 @@
             .state('home', {
                 parent: 'secured',
                 url: '/home',
-                template: '<p>Home page</p>'
+                template: '<p>Home page</p>',
+                data: {
+                    pageHeader: 'Home',
+                    pageDescription: 'Description of home page'
+                }
             })
         ;
     }

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.PostConstruct
 
@@ -49,5 +50,13 @@ class UserService implements UserDetailsService {
         )
         userRepository.save(user)
         return user
+    }
+
+    @Transactional
+    def getUsers() {
+        userRepository.findAll().as(List.class).collect {
+            it.password = null
+            return it
+        }
     }
 }

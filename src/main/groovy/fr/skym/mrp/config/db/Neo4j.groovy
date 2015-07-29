@@ -11,7 +11,7 @@ import org.springframework.data.neo4j.config.Neo4jConfiguration
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @EnableNeo4jRepositories(basePackages =  "fr.skym.mrp")
 class Neo4j extends Neo4jConfiguration {
 

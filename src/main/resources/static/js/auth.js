@@ -1,10 +1,22 @@
 (function(angular) {
 
-    run.$inject = ['$rootScope', '$state', 'lodash', 'authService'];
-    function run($rootScope, $state, lodash, authService) {
+    run.$inject = ['$rootScope', '$state', 'authService', 'Restangular', 'lodash'];
+    function run($rootScope, $state, authService, Restangular, _) {
+
+        Restangular.setBaseUrl('/rest');
+        Restangular.addFullRequestInterceptor(function(element, operation, what, url, headers, params) {
+            var token = authService.getToken();
+            if (!_.isEmpty(token)) {
+                headers['X-Auth-Token'] = authService.getToken();
+            }
+            return {
+                headers: headers
+            }
+        });
+
         $rootScope.$on('$stateChangeStart', function securityCheck(event, toState, toParams, fromState, fromParams) {
             console.log('Security check');
-            if (!lodash.isUndefined(toState.data) && toState.data.secured) {
+            if (!_.isUndefined(toState.data) && toState.data.secured) {
                 console.log('State ' + toState.name + ' is secured');
                 if (authService.isAuthenticated()) {
                     console.log('User is authenticated, moving forward');
@@ -37,8 +49,8 @@
 
         function authenticate(username, password) {
             return Restangular
-                .all('rest')
-                .customPOST({}, 'authenticate', {'username': username, 'password': password})
+                .all('authenticate')
+                .customPOST({}, '', {'username': username, 'password': password})
                 .then(function success(data) {
                     localStorageService.set(tokenStorageKey, data.token);
                     localStorageService.set(userDataStorageKey, jwtHelper.decodeToken(data.token));
@@ -49,7 +61,8 @@
 
         return {
             'isAuthenticated': isAuthenticated,
-            'authenticate': authenticate
+            'authenticate': authenticate,
+            'getToken': getToken
         };
     }
 

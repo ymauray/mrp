@@ -3,7 +3,9 @@
     appController.$inject = ['localStorageService', '$rootScope', 'lodash'];
     function appController(localStorageService, $rootScope, _) {
         var ctrl = this;
+
         ctrl.title = "Titre de la page";
+
         $rootScope.$on('$stateChangeSuccess', function(element, toState, toStateParam) {
             if (!_.isUndefined(toState) && !_.isUndefined(toState.data)) {
                 ctrl.stateData = _.pick(toState.data, ['pageHeader', 'pageDescription']);
@@ -19,7 +21,7 @@
     }
 
     angular
-        .module('mrp', ['mrp.auth', 'mrp.login', 'mrp.routes', 'mrp.users', 'adminlte', 'LocalStorageModule', 'backstretch', 'lodash'])
+        .module('mrp', ['mrp.auth', 'mrp.login', 'mrp.routes', 'mrp.users', 'adminlte', 'LocalStorageModule', 'backstretch', 'lodash', 'restangular'])
     ;
 
     angular

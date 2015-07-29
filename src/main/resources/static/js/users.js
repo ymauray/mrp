@@ -1,7 +1,7 @@
 (function(angular) {
 
     config.$inject = ['$stateProvider'];
-    function config($stateProvider) {
+    function config($stateProvider, Restangular) {
         $stateProvider
             .state('users', {
                 parent: 'secured',
@@ -9,6 +9,11 @@
                 templateUrl: 'templates/users.html',
                 data: {
                     pageHeader: 'Users and rights'
+                },
+                resolve: {
+                    users: ['Restangular', function(Restangular) {
+                        return Restangular.all('user').getList();
+                    }]
                 }
             })
         ;
@@ -22,7 +27,7 @@
     }
 
     angular
-        .module('mrp.users', ['mrp.routes'])
+        .module('mrp.users', ['mrp.routes', 'restangular'])
     ;
 
     angular

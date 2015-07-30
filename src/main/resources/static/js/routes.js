@@ -5,6 +5,7 @@
         var userData = localStorageService.get(userDataStorageKey);
         this.username = userData.username;
         this.roles = userData.roles;
+        this.userData = userData;
 
         this.isAdmin = function() {
             return this.hasRole('ADMIN');

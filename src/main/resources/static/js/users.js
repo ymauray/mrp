@@ -1,5 +1,11 @@
 (function(angular) {
 
+    userController.$inject = ['users'];
+    function userController(users) {
+        var ctrl = this;
+        ctrl.users = users;
+    }
+
     config.$inject = ['$stateProvider'];
     function config($stateProvider, Restangular) {
         $stateProvider
@@ -14,7 +20,9 @@
                     users: ['Restangular', function(Restangular) {
                         return Restangular.all('user').getList();
                     }]
-                }
+                },
+                controller: userController,
+                controllerAs: 'userController'
             })
         ;
 

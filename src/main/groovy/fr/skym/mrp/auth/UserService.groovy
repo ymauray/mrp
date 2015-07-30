@@ -22,7 +22,7 @@ class UserService implements UserDetailsService {
     @PostConstruct
     def init() {
         User admin = userRepository.findByUsername("admin")
-        if (!admin) {
+        if (admin == null) {
             createUser("admin", "Ch@ng3M3", "ADMIN", "USER")
         }
     }

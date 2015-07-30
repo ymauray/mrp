@@ -33,8 +33,8 @@ dependencies {
     compile group: 'org.springframework.data', name: 'spring-data-neo4j', version: '3.3.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version: '4.1.7.RELEASE'
     compile group: 'org.springframework', name: 'spring-tx', version: '4.1.7.RELEASE'
-    compile group: 'org.neo4j', name: 'neo4j-shell', version: '2.2.3'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.0.Final'
+    compile group: 'org.neo4j', name: 'neo4j-shell', version: '2.1.7'
     compile group: 'joda-time', name: 'joda-time', version: '2.8.1'
     compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
 

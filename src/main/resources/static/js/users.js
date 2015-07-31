@@ -4,6 +4,14 @@
     function userController(users) {
         var ctrl = this;
         ctrl.users = users;
+        ctrl.select = function(user) {
+            user.tableItem = user.tableItem || {selected: false};
+            user.tableItem.selected = !user.tableItem.selected;
+            user.status = 'error';
+        };
+        ctrl.edit = function(user, property) {
+            console.log("edit " + property);
+        }
     }
 
     config.$inject = ['$stateProvider'];

@@ -11,22 +11,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="box-controls" style="height: 120px; padding-top: 10px;">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-primary">1</button>
+                        <button type="button" class="btn btn-sm btn-primary">1</button>
+                        <button type="button" class="btn btn-sm btn-primary">1</button>
+                    </div>
+                </div>
             </div><!-- /.box-header -->
             <div class="box-body">
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
+                            <th style="width: 1px;"></th>
                             <th>ID</th>
                             <th>Username</th>
                             <th>Name</th>
                             <th>Status</th>
-                            <th>Reason</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="user in userController.users">
+                        <tr ng-repeat="user in userController.users" ng-click="userController.select(user)" ng-class="{'active': user.tableItem.selected == true}">
+                            <td><i class="mrp-status" data-object="user"></i></td>
                             <td>{{user.id}}</td>
-                            <td>{{user.username}}</td>
+                            <td class="mrp-cell" object="user" property="username"></td>
                             <td></td>
                             <td><span class="label label-success">Active</span></td>
                             <td></td>

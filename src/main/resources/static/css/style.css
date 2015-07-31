@@ -5,3 +5,12 @@ html {
 body {
     min-height: 100%;
 }
+
+td {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    cursor: pointer;
+}

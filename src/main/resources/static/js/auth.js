@@ -1,7 +1,7 @@
 (function(angular) {
 
-    run.$inject = ['$rootScope', '$state', 'authService', 'Restangular', 'lodash'];
-    function run($rootScope, $state, authService, Restangular, _) {
+    run.$inject = ['$rootScope', '$state', 'authService', 'Restangular', '$window', 'lodash'];
+    function run($rootScope, $state, authService, Restangular, $window, _) {
 
         Restangular.setBaseUrl('/rest');
         Restangular.addFullRequestInterceptor(function(element, operation, what, url, headers, params) {
@@ -22,8 +22,7 @@
                     console.log('User is authenticated, moving forward');
                 } else {
                     console.log('User is NOT authenticated, redirecting to login page');
-                    $state.go('login');
-                    event.preventDefault();
+                    $window.location = 'login';
                 }
             }
         })
@@ -52,8 +51,12 @@
                 .all('authenticate')
                 .customPOST({}, '', {'username': username, 'password': password})
                 .then(function success(data) {
-                    localStorageService.set(tokenStorageKey, data.token);
-                    localStorageService.set(userDataStorageKey, jwtHelper.decodeToken(data.token));
+                    if (!_.isEmpty(data.token)) {
+                        localStorageService.set(tokenStorageKey, data.token);
+                        localStorageService.set(userDataStorageKey, jwtHelper.decodeToken(data.token));
+                    } else {
+                        return $q.reject(data.message);
+                    }
                 }, function failure(reason) {
                     return $q.reject(reason);
                 });
@@ -67,7 +70,7 @@
     }
 
     angular
-        .module('mrp.auth', ['ngLodash', 'angular-jwt', 'LocalStorageModule', 'restangular'])
+        .module('mrp.auth', ['ngLodash', 'angular-jwt', 'LocalStorageModule', 'restangular', 'ui.router'])
     ;
 
     angular

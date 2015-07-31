@@ -21,7 +21,7 @@
     }
 
     angular
-        .module('mrp', ['mrp.auth', 'mrp.login', 'mrp.routes', 'mrp.users', 'adminlte', 'LocalStorageModule', 'backstretch', 'lodash', 'restangular'])
+        .module('mrp', ['mrp.auth', 'mrp.routes', 'mrp.users', 'adminlte', 'LocalStorageModule', 'backstretch', 'lodash', 'restangular'])
     ;
 
     angular

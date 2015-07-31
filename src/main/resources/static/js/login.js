@@ -1,7 +1,7 @@
 (function(angular) {
 
-    loginController.$inject = ['$scope', 'lodash', 'authService', '$state'];
-    function loginController($scope, lodash, authService, $state) {
+    loginController.$inject = ['$scope', 'authService', '$window'];
+    function loginController($scope, authService, $window) {
         var ctrl = this;
         ctrl.processing = false;
         ctrl.error = false;
@@ -9,7 +9,7 @@
             ctrl.processing = true;
             authService.authenticate(ctrl.username, ctrl.password).then(function success() {
                 console.log('Login successfull');
-                $state.go('home');
+                $window.location = "..";
             }, function failure() {
                 console.log('Login failed');
                 ctrl.error = true;
@@ -17,44 +17,33 @@
                 angular.element('[autofocus]').focus();
                 angular.element('[autofocus]').select();
             });
-        }
+        };
+
         $scope.$watch(function() { return ctrl.username  + ctrl.password }, function() {
             ctrl.error = false;
         });
     }
 
-    onEnter.$inject = ['localStorageService', 'tokenStorageKey', 'userDataStorageKey'];
-    function onEnter(localStorageService, tokenStorageKey, userDataStorageKey) {
+    config.$inject = ['localStorageServiceProvider'];
+    function config(localStorageServiceProvider) {
+        localStorageServiceProvider.setPrefix('mrp');
+    }
+
+    run.$inject = ['localStorageService', 'tokenStorageKey', 'userDataStorageKey'];
+    function run(localStorageService, tokenStorageKey, userDataStorageKey) {
         localStorageService.remove(tokenStorageKey);
         localStorageService.remove(userDataStorageKey);
     }
 
-    onExit.$inject = [];
-    function onExit() {
-        angular.element('.backstretch').remove();
-    }
-
-    config.$inject = ['$stateProvider'];
-    function config($stateProvider) {
-        $stateProvider
-            .state('login', {
-                url: '/login',
-                templateUrl: 'templates/login.html',
-                controller: loginController,
-                controllerAs: 'loginController',
-                onEnter: onEnter,
-                onExit: onExit
-            })
-        ;
-    }
-
     angular
-        .module('mrp.login', ['ui.router', 'lodash', 'mrp.auth', 'LocalStorageModule'])
+        .module('mrp.login', ['mrp.auth', 'LocalStorageModule'])
     ;
 
     angular
         .module('mrp.login')
+        .controller('LoginController', loginController)
         .config(config)
+        .run(run)
     ;
 
 })(window.angular);

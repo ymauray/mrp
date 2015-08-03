@@ -54,9 +54,16 @@ class UserService implements UserDetailsService {
 
     @Transactional
     def getUsers() {
-        userRepository.findAll().as(List.class).collect {
-            it.password = null
-            return it
-        }
+        userRepository.findAll().as(List.class)
+    }
+
+    @Transactional
+    def get(Long id) {
+        userRepository.findOne(id)
+    }
+
+    @Transactional
+    def save(User user) {
+        userRepository.save(user)
     }
 }

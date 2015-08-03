@@ -1,7 +1,7 @@
 (function(angular) {
 
-    userController.$inject = ['users'];
-    function userController(users) {
+    userController.$inject = ['users', '$q', '$timeout', 'validation', 'lodash'];
+    function userController(users, $q, $timeout, validation, _) {
         var ctrl = this;
         ctrl.users = users;
         ctrl.select = function(user) {
@@ -11,7 +11,18 @@
         };
         ctrl.edit = function(user, property) {
             console.log("edit " + property);
-        }
+        };
+        ctrl.validate = function(user) {
+            return $q(function(resolve, reject) {
+                $timeout(function() {
+                    var validationSupport = validation.getValidationSupport();
+                    if (_.isEmpty(user.username)) {
+                        validationSupport.addError('username', 'Username is mandatory');
+                    }
+                    resolve(validationSupport.getValidationResult());
+                });
+            });
+        };
     }
 
     config.$inject = ['$stateProvider'];
@@ -43,7 +54,7 @@
     }
 
     angular
-        .module('mrp.users', ['mrp.routes', 'restangular'])
+        .module('mrp.users', ['mrp.routes', 'restangular', 'validation'])
     ;
 
     angular

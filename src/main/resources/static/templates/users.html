@@ -11,7 +11,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-controls" style="height: 120px; padding-top: 10px;">
+                <div class="box-controls" style="padding-top: 10px;">
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-primary">1</button>
                         <button type="button" class="btn btn-sm btn-primary">1</button>
@@ -20,10 +20,10 @@
                 </div>
             </div><!-- /.box-header -->
             <div class="box-body">
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered" data-selection-mode="single">
                     <thead>
                         <tr>
-                            <th style="width: 1px;"></th>
+                            <th></th>
                             <th>ID</th>
                             <th>Username</th>
                             <th>Name</th>
@@ -32,13 +32,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="user in userController.users" ng-click="userController.select(user)" ng-class="{'active': user.tableItem.selected == true}">
-                            <td><i class="mrp-status" data-object="user"></i></td>
-                            <td>{{user.id}}</td>
-                            <td class="mrp-cell" object="user" property="username"></td>
-                            <td></td>
-                            <td><span class="label label-success">Active</span></td>
-                            <td></td>
+                        <tr data-ng-repeat="user in userController.users" data-object="user" data-validator="userController.validate">
+                            <td class="mrp-status"></td>
+                            <td class="read-only" property="id"></td>
+                            <td class="cell-editor" property="username"></td>
+                            <td class="cell-editor" property="displayname"></td>
+                            <td><div style="border: 1px solid transparent; padding: 2px;"><span class="label label-success">Active</span></div></td>
+                            <td class="cell-editor" property="description"></td>
                         </tr>
                     </tbody>
                 </table>

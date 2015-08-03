@@ -20,4 +20,7 @@ class User implements UserDetails {
     @Fetch @RelatedTo(type = "HAS_ROLE")
     Set<Authority> authorities
 
+    String displayname
+    String description
+
 }

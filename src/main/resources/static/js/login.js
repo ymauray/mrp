@@ -28,7 +28,7 @@
             ctrl.processing = true;
             authService.authenticate(ctrl.username, ctrl.password, ctrl.token).then(function success() {
                 console.log('Login successfull');
-                $window.location = "..";
+                $window.location = "./#/home";
             }, function failure() {
                 console.log('Login failed');
                 ctrl.error = true;

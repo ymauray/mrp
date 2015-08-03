@@ -19,6 +19,8 @@
 
 package fr.skym.mrp
 
+import groovy.util.logging.Log4j
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -27,14 +29,36 @@ import org.springframework.boot.context.web.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
+import org.springframework.core.env.Environment
+import org.springframework.data.neo4j.config.EnableNeo4jRepositories
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.transaction.annotation.EnableTransactionManagement
+
+import javax.annotation.PostConstruct
 
 @SpringBootApplication
+@EnableTransactionManagement(proxyTargetClass = true)
+@EnableNeo4jRepositories(basePackages =  "fr.skym.mrp")
+@Log4j
 class Application extends SpringBootServletInitializer implements CommandLineRunner {
 
     static void main(String...args) {
-        SpringApplication.run Application, args
+        def app = new SpringApplication(Application)
+        app.setAdditionalProfiles("embeded")
+        app.run(args)
+    }
+
+    @Autowired
+    Environment env
+
+    @PostConstruct
+    void init() {
+        if (env.activeProfiles.length == 0) {
+            log.warn "No Spring profile configured, running with default configuration"
+        } else {
+            log.info "Running with Spring profiles : ${Arrays.toString(env.activeProfiles)}"
+        }
     }
 
     @Bean
@@ -45,25 +69,11 @@ class Application extends SpringBootServletInitializer implements CommandLineRun
 
     @Override
     void run(String... args) throws Exception {
-        /*
-        def auth = new GoogleAuthenticator()
-        def key = auth.createCredentials()
-        println key.key
-        */
-        // FKBE EFXK 2PFY FXGI
-
-        /*
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
-        print "Password:"
-        def password = br.readLine()
-        def auth = new GoogleAuthenticator()
-        boolean isCodeValid = auth.authorize("FKBEEFXK2PFYFXGI", password as int);
-        println isCodeValid
-        */
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(Application)
+        return builder.profiles("deployed").sources(Application)
     }
+
 }

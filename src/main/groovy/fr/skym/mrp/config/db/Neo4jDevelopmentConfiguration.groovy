@@ -25,16 +25,14 @@ import org.neo4j.shell.ShellSettings
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.neo4j.config.EnableNeo4jRepositories
+import org.springframework.context.annotation.Profile
 import org.springframework.data.neo4j.config.Neo4jConfiguration
-import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @Configuration
-@EnableTransactionManagement(proxyTargetClass = true)
-@EnableNeo4jRepositories(basePackages =  "fr.skym.mrp")
-class Neo4j extends Neo4jConfiguration {
+@Profile(value = "!deployed")
+class Neo4jDevelopmentConfiguration extends Neo4jConfiguration {
 
-    Neo4j() {
+    Neo4jDevelopmentConfiguration() {
         setBasePackage("fr.skym.mrp")
     }
 
@@ -46,4 +44,5 @@ class Neo4j extends Neo4jConfiguration {
                 .setConfig(ShellSettings.remote_shell_port, port)
                 .newGraphDatabase()
     }
+
 }

@@ -1,16 +1,36 @@
 <!DOCTYPE html>
+<!--
+  ~     MediaPlanner
+  ~     Copyright (C) 2015  Yannick Mauray
+  ~
+  ~     This program is free software; you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation; either version 2 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License along
+  ~     with this program; if not, write to the Free Software Foundation, Inc.,
+  ~     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+  -->
+
 <html lang="en" ng-app="mrp" ng-controller="AppController as appController">
     <head>
         <meta charset="UTF-8">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
         <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css"/>
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
         <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.css"/>
+        <link rel="stylesheet" href="templates/ng-adminLTE/google/source-sans-pro.css"/>
         <link rel="stylesheet" href="templates/ng-adminLTE/dist/css/AdminLTE.css"/>
         <link rel="stylesheet" href="templates/ng-adminLTE/dist/css/skins/skin-red.css"/>
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/loginform.css"/>
-        <title>{{appController.title}}</title>
+        <title ng-bind="appController.title">Loading...</title>
     </head>
     <body class="sidebar-mini skin-red">
         <section class="ui-view"></section>

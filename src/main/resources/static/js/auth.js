@@ -1,3 +1,22 @@
+/*
+ *     MediaPlanner
+ *     Copyright (C) 2015  Yannick Mauray
+ *
+ *     This program is free software; you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation; either version 2 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License along
+ *     with this program; if not, write to the Free Software Foundation, Inc.,
+ *     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
 (function(angular) {
 
     run.$inject = ['$rootScope', '$state', 'authService', 'Restangular', '$window', 'lodash'];
@@ -22,6 +41,7 @@
                     console.log('User is authenticated, moving forward');
                 } else {
                     console.log('User is NOT authenticated, redirecting to login page');
+                    event.preventDefault();
                     $window.location = 'login';
                 }
             }
@@ -46,20 +66,20 @@
             return authenticated;
         }
 
-        function authenticate(username, password) {
+        function authenticate(username, password, token) {
             return Restangular
                 .all('authenticate')
-                .customPOST({}, '', {'username': username, 'password': password})
-                .then(function success(data) {
+                .post({username: username, password: password, token: token})
+                .then(function resolve(data) {
                     if (!_.isEmpty(data.token)) {
                         localStorageService.set(tokenStorageKey, data.token);
                         localStorageService.set(userDataStorageKey, jwtHelper.decodeToken(data.token));
                     } else {
                         return $q.reject(data.message);
                     }
-                }, function failure(reason) {
+                }, function reject(reason) {
                     return $q.reject(reason);
-                });
+                })
         }
 
         return {

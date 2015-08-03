@@ -1,15 +1,35 @@
 <!DOCTYPE html>
+<!--
+  ~     MediaPlanner
+  ~     Copyright (C) 2015  Yannick Mauray
+  ~
+  ~     This program is free software; you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation; either version 2 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License along
+  ~     with this program; if not, write to the Free Software Foundation, Inc.,
+  ~     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+  -->
+
 <html>
   <head>
     <meta charset="UTF-8">
     <title>MediaPlanner | Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.4 -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
     <link href="bower_components/fontawesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap 3.3.4 -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
+    <link rel="stylesheet" href="templates/ng-adminLTE/google/source-sans-pro.css"/>
     <link href="templates/ng-adminLTE/dist/css/AdminLTE.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -28,12 +48,16 @@
         <p class="login-box-msg">Sign in to start your session</p>
         <form name="form" ng-submit="loginController.login()">
           <div class="form-group has-feedback" ng-class="{'has-error': loginController.error}">
-            <input type="text" class="form-control" placeholder="Username" ng-model="loginController.username" required autofocus/>
+            <input type="text" class="form-control" placeholder="Username" ng-model="loginController.username" required pattern=".{5,}" autofocus/>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback" ng-class="{'has-error': loginController.error}">
-            <input type="password" class="form-control" placeholder="Password" ng-model="loginController.password" required/>
+            <input type="password" class="form-control" placeholder="Password" ng-model="loginController.password" required pattern=".{6,}"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback" ng-class="{'has-error': loginController.error}">
+            <input type="text" class="form-control" placeholder="Token" ng-model="loginController.token" required pattern="[0-9]{6}"/>
+            <span class="fa fa-key form-control-feedback"></span>
           </div>
           <div class="row">
             <div class="col-xs-offset-8 col-xs-4">

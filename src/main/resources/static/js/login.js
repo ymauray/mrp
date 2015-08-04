@@ -19,8 +19,8 @@
 
 (function(angular) {
 
-    loginController.$inject = ['$scope', 'authService', '$window'];
-    function loginController($scope, authService, $window) {
+    loginController.$inject = ['$scope', 'authService', '$window', '$state', '$location'];
+    function loginController($scope, authService, $window, $state, $location) {
         var ctrl = this;
         ctrl.processing = false;
         ctrl.error = false;
@@ -28,7 +28,8 @@
             ctrl.processing = true;
             authService.authenticate(ctrl.username, ctrl.password, ctrl.token).then(function success() {
                 console.log('Login successfull');
-                $window.location = "./#/home";
+                var url = $location.absUrl();
+                $window.location = url + "/..";
             }, function failure() {
                 console.log('Login failed');
                 ctrl.error = true;
@@ -43,9 +44,14 @@
         });
     }
 
-    config.$inject = ['localStorageServiceProvider'];
-    function config(localStorageServiceProvider) {
+    config.$inject = ['localStorageServiceProvider', '$stateProvider'];
+    function config(localStorageServiceProvider, $stateProvider) {
         localStorageServiceProvider.setPrefix('mrp');
+        $stateProvider
+            .state('home', {
+                url: '/home'
+            })
+        ;
     }
 
     run.$inject = ['localStorageService', 'tokenStorageKey', 'userDataStorageKey'];
@@ -55,7 +61,7 @@
     }
 
     angular
-        .module('mrp.login', ['mrp.auth', 'LocalStorageModule'])
+        .module('mrp.login', ['mrp.auth', 'LocalStorageModule', 'ui.router'])
     ;
 
     angular

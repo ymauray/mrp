@@ -19,6 +19,7 @@
 
 package fr.skym.mrp.rest
 
+import fr.skym.mrp.auth.User
 import fr.skym.mrp.auth.UserService
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.springframework.beans.factory.annotation.Autowired
@@ -58,5 +59,20 @@ class UserConroller {
             userService.save(user)
         }
         return user.collect(cleanner).first()
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.PUT)
+    def insert(@RequestBody PresentationModel presentationModel) {
+        def user = new User()
+        use(InvokerHelper) {
+            user.setProperties(presentationModel.properties)
+            user.id = null
+        }
+        userService.save(user)
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    def create() {
+        return userService.createEmptyUser()
     }
 }

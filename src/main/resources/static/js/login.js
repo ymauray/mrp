@@ -54,14 +54,15 @@
         ;
     }
 
-    run.$inject = ['localStorageService', 'tokenStorageKey', 'userDataStorageKey'];
-    function run(localStorageService, tokenStorageKey, userDataStorageKey) {
+    run.$inject = ['localStorageService', 'tokenStorageKey', 'userDataStorageKey', 'Restangular'];
+    function run(localStorageService, tokenStorageKey, userDataStorageKey, Restangular) {
         localStorageService.remove(tokenStorageKey);
         localStorageService.remove(userDataStorageKey);
+        Restangular.setBaseUrl('rest');
     }
 
     angular
-        .module('mrp.login', ['mrp.auth', 'LocalStorageModule', 'ui.router'])
+        .module('mrp.login', ['mrp.auth', 'LocalStorageModule', 'ui.router', 'restangular'])
     ;
 
     angular

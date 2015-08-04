@@ -72,7 +72,7 @@
                     });
                 };
                 ctrl.save = function() {
-                    ctrl.object.save();
+                    return ctrl.object.save();
                 };
             },
             controllerAs: 'rowController',
@@ -155,7 +155,13 @@
                     if (!ctrl.editing) return;
                     $scope.object[$scope.property] = $scope.tmp;
                     ctrl.editing = false;
-                    ctrl.rowController.validate().then(ctrl.rowController.save());
+                    ctrl.rowController.validate()
+                        .then(function() {
+                            return ctrl.rowController.save();
+                        })
+                        .then(function(object) {
+                            angular.merge($scope.object, object);
+                        });
                 };
                 ctrl.cancelEdit = function() {
                     ctrl.editing = false;

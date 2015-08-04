@@ -19,8 +19,8 @@
 
 (function(angular) {
 
-    userController.$inject = ['users', '$q', '$timeout', 'validation', 'lodash'];
-    function userController(users, $q, $timeout, validation, _) {
+    userController.$inject = ['users', '$q', '$timeout', 'validation', 'Restangular', 'lodash'];
+    function userController(users, $q, $timeout, validation, Restangular, _) {
         var ctrl = this;
         ctrl.users = users;
         ctrl.select = function(user) {
@@ -42,6 +42,11 @@
                 });
             });
         };
+        ctrl.create = function() {
+            Restangular.all('user').create().then(function(newUser) {
+                ctrl.users.push(newUser);
+            })
+        }
     }
 
     config.$inject = ['$stateProvider'];

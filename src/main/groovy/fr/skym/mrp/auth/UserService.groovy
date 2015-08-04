@@ -86,4 +86,9 @@ class UserService implements UserDetailsService {
     def save(User user) {
         userRepository.save(user)
     }
+
+    @Transactional
+    def createEmptyUser() {
+        return new User()
+    }
 }

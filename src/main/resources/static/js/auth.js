@@ -22,7 +22,6 @@
     run.$inject = ['$rootScope', '$state', 'authService', 'Restangular', '$window', 'lodash'];
     function run($rootScope, $state, authService, Restangular, $window, _) {
 
-        Restangular.setBaseUrl('rest');
         Restangular.addFullRequestInterceptor(function(element, operation, what, url, headers, params) {
             var token = authService.getToken();
             if (!_.isEmpty(token)) {

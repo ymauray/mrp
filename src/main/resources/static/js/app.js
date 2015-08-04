@@ -42,6 +42,15 @@
         localStorageServiceProvider.setPrefix('mrp');
     }
 
+    run.$inject = ["Restangular"];
+    function run(Restangular) {
+        Restangular.setBaseUrl('rest');
+        Restangular.extendCollection('user', function(collection) {
+            collection.addRestangularMethod('create', 'get', 'create');
+            return collection;
+        });
+    }
+
     angular
         .module('mrp', [
             'mrp.auth',
@@ -57,6 +66,7 @@
     angular
         .module('mrp')
         .config(config)
+        .run(run)
         .controller('AppController', appController)
     ;
 

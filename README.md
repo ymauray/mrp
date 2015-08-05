@@ -28,6 +28,10 @@ Get the javascript components :
     
 ----
 
+http://stackoverflow.com/questions/13956651/externalizing-tomcat-webapp-config-from-war-file
+
+----
+
 Install Apache 2 modules :
 
     $ sudo a2enmod ssl

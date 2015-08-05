@@ -41,6 +41,7 @@ dependencies {
 
     /* Neo4j */
     compile group: 'org.springframework.data', name: 'spring-data-neo4j', version: '3.3.1.RELEASE'
+    compile group: 'org.springframework.data', name: 'spring-data-neo4j-rest', version: '3.3.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version: '4.1.7.RELEASE'
     compile group: 'org.springframework', name: 'spring-tx', version: '4.1.7.RELEASE'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.0.Final'

@@ -37,6 +37,8 @@
     <logger name="org.hibernate" level="INFO"/>
     <logger name="org.jboss" level="INFO"/>
     <logger name="sun" level="INFO"/>
+    <logger name="com.sun" level="INFO"/>
+    <logger name="org.neo4j" level="INFO"/>
 
     <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
